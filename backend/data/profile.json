@@ -1,0 +1,44 @@
+{
+  "name": "Hodaya Nurelyan",
+  "title": "Full Stack Developer",
+  "summary": "Full Stack Team Leader with over a decade of experience in software engineering. Proven success in leading development teams, guiding product managers, and delivering scalable, high-performing web systems.",
+  "skills": [
+    { "name": "React", "level": 90 },
+    { "name": "Python", "level": 95 },
+    { "name": "AWS", "level": 70 },
+    { "name": "php", "level": 90 },
+    { "name": "javascript", "level": 95 },
+    { "name": "AWS", "level": 70 },
+    { "name": "css", "level": 70 }
+  ],
+  "experience": [
+    {
+      "company": "Signature-IT",
+      "title": "Full Stack Developer / Team Leader",
+      "years": "2016–Present",
+      "stack": ["Python", "FastAPI", "PostgreSQL", "Docker"],
+      "highlights": [
+        "הובלתי מיגרציה למיקרו־שירותים",
+        "שיפרתי ביצועים ב־40%"
+      ]
+    },
+    {
+      "company": "Linnovate",
+      "title": "Full Stack Developer",
+      "years": "2012–2016",
+      "stack": ["React", "Node.js", "MongoDB"],
+      "highlights": [
+        "בניית מערכת לניהול תשלומים מאובטחת",
+        "הכנסת בדיקות CI/CD"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "AI Resume Booster",
+      "description": "מערכת לחיזוק קורות חיים בעזרת GPT",
+      "tech": ["React", "Python", "OpenAI API"],
+      "github": "https://github.com/mor/resume-booster"
+    }
+  ]
+}
