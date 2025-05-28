@@ -20,7 +20,7 @@ import {
 
 import { PieChart, Pie, Cell, Legend } from "recharts";
 
-// המשך הקוד...
+import ChatBot from "../components/ChatBot";
 
 interface Skill {
   name: string;
@@ -209,6 +209,7 @@ export default function Home() {
           </div>
         ))}
       </section>
+      <ChatBot />
     </div>
   );
 }

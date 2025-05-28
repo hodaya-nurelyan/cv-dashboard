@@ -12,3 +12,6 @@ dist/
 
 # Builds
 *.log
+
+# Env
+**/.env
