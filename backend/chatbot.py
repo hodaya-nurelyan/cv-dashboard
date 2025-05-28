@@ -5,14 +5,11 @@ import json
 import requests 
 
 
-import os
-print("hodayaaaaaaaaaaaaaaa🔑", os.getenv("GROQ_API_KEY"))
-
 router = APIRouter()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"   
+GROQ_API_URL = os.getenv("GROQ_API_URL")
+GROQ_MODEL = os.getenv("GROQ_MODEL")   
 
 class ChatRequest(BaseModel):
     question: str
@@ -46,25 +43,10 @@ async def chat_endpoint(req: ChatRequest):
             ]
         }
 
-
-        
-        # payload = {
-        #     "model": "meta-llama/llama-4-scout-17b-16e-instruct",  # או כל מודל אחר ש-Groq תומכים בו
-        #     "messages": [
-        #         {"role": "system", "content": "You are a helpful assistant."},
-        #         {"role": "user", "content": "Tell me about yourself"}
-        #     ]
-        # }
-
         #TODO , change this line
 
       # response = requests.post(GROQ_API_URL, headers=headers, json=payload)
         response = requests.post(GROQ_API_URL, headers=headers, json=payload, verify=False)
-        print("=================================")
-        print(response.status_code)
-        print(response.json())
-        print("=================================")
-
         response.raise_for_status()
         result = response.json()
 

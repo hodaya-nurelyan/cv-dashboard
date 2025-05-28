@@ -76,7 +76,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/profile")
+    fetch(`${import.meta.env.VITE_API_URL}/api/profile`)
       .then((res) => res.json())
       .then(setProfile);
   }, []);
