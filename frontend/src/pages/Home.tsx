@@ -23,6 +23,7 @@ import { PieChart, Pie, Cell, Legend } from "recharts";
 import ChatBot from "../components/ChatBot";
 import SideNav from "../components/SideNav";
 import DynamicBackground from "../components/DynamicBackground";
+import { SparklesIcon } from "@heroicons/react/24/solid";
 
 interface Skill {
   name: string;
@@ -102,7 +103,8 @@ export default function Home() {
         </a>
         <div className="lg:flex lg:justify-between lg:gap-4">
           <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[40%] lg:flex-col lg:justify-between lg:py-24">
-            <h1 class="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl flex items-center gap-2">
+              <SparklesIcon className="h-7 w-7 text-pink-500 animate-pulse" />
               <a href="/">{profile.name}</a>
             </h1>
 
