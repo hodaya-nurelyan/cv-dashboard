@@ -24,6 +24,8 @@ import ChatBot from "../components/ChatBot";
 import SideNav from "../components/SideNav";
 import DynamicBackground from "../components/DynamicBackground";
 import { SparklesIcon } from "@heroicons/react/24/solid";
+import DownloadMenu from "../components/DownloadMenu";
+import FloatingShareMenu from "../components/FloatingShareMenu";
 
 interface Skill {
   name: string;
@@ -108,7 +110,7 @@ export default function Home() {
               <a href="/">{profile.name}</a>
             </h1>
 
-            <h2 class="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
+            <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
               {profile.title}
             </h2>
 
@@ -120,12 +122,13 @@ export default function Home() {
           <main id="content" className="pt-24 lg:w-[60%] lg:py-24">
             <section
               id="about"
-              class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="About me"
             >
               <p className="mb-4">{profile.about[0].p1}</p>
               <p className="mb-4">{profile.about[1].p2}</p>
               <p className="mb-4">{profile.about[2].p3}</p>
+              <FloatingShareMenu />
             </section>
             <section
               id="experience"
@@ -133,37 +136,37 @@ export default function Home() {
               aria-label="Work experience"
             >
               <h3 className="text-2xl font-semibold mb-4">Experience</h3>
-              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"></div>
+              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"></div>
               <div>
-                <ol class="group/list">
+                <ol className="group/list">
                   {profile.experience.map((job) => (
-                    <li key={job.company} class="mb-12">
-                      <div class="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
-                        <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                    <li key={job.company} className="mb-12">
+                      <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                        <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                         <header
-                          class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
+                          className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
                           aria-label="2024 to Present"
                         >
                           {job.years}
                         </header>
-                        <div class="z-10 sm:col-span-6">
-                          <h3 class="font-medium leading-snug text-slate-200">
+                        <div className="z-10 sm:col-span-6">
+                          <h3 className="font-medium leading-snug text-slate-200">
                             <div>
                               <a
-                                class="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
+                                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
                                 href="https://askhodaya.com/"
                                 target="_blank"
                                 rel="noreferrer noopener"
                                 aria-label="Senior Frontend Engineer, Accessibility at Klaviyo (opens in a new tab)"
                               >
-                                <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
+                                <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                                 <span>
                                   {job.title} @ {job.company}
                                 </span>
                               </a>
                             </div>
                           </h3>
-                          <p class="mt-2 text-sm leading-normal">
+                          <p className="mt-2 text-sm leading-normal">
                             Build and maintain critical components used to
                             construct Klaviyo’s frontend, across the whole
                             product. Work closely with cross-functional teams,
@@ -172,12 +175,12 @@ export default function Home() {
                             practices in web accessibility.
                           </p>
                           <ul
-                            class="mt-2 flex flex-wrap"
+                            className="mt-2 flex flex-wrap"
                             aria-label="Technologies used"
                           >
                             {job.stack.map((h, idx) => (
-                              <li key={idx} class="mr-1.5 mt-2">
-                                <div class="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 ">
+                              <li key={idx} className="mr-1.5 mt-2">
+                                <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 ">
                                   {h}
                                 </div>
                               </li>
@@ -189,6 +192,7 @@ export default function Home() {
                   ))}
                 </ol>
               </div>
+              <DownloadMenu />
             </section>
 
             <section className="scroll-mt-24" id="education">
@@ -218,7 +222,7 @@ export default function Home() {
               </VerticalTimeline>
             </section>
 
-            <section className="scroll-mt-24" id="skills">
+            {/* <section className="scroll-mt-24" id="skills">
               <h3 className="text-2xl font-semibold mb-2">
                 Skills & Technology Distribution
               </h3>
@@ -266,8 +270,11 @@ export default function Home() {
                   </ResponsiveContainer>
                 </div>
               </div>
-            </section>
+            </section> */}
 
+            <section className="scroll-mt-24" id="contact">
+              <h3 className="text-2xl font-semibold mb-4">Contact Me</h3>
+            </section>
             <ChatBot />
           </main>
         </div>

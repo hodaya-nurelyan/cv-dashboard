@@ -4,7 +4,7 @@ const items = [
   { href: "#about", id: "about", label: "About" },
   { href: "#experience", id: "experience", label: "Experience" },
   { href: "#education", id: "education", label: "Education" },
-  { href: "#skills", id: "skills", label: "Skills" },
+  { href: "#contact", id: "contact", label: "Contact" },
 ];
 
 const SideNav = () => {

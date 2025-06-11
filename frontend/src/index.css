@@ -19,3 +19,11 @@
 html {
   scroll-behavior: smooth;
 }
+
+.dir-rtl{
+  direction: rtl;
+}
+
+.dir-ltr{
+  direction: ltr;
+}

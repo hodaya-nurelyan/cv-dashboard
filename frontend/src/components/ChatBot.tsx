@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChatMessage } from "./ChatMessage";
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,6 +9,8 @@ export default function ChatBot() {
   const [history, setHistory] = useState<
     { question: string; answer: string }[]
   >([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const LOCAL_STORAGE_KEY = "chat-history";
 
@@ -19,21 +22,47 @@ export default function ChatBot() {
     }
   }, []);
 
-  // Save history to localStorage on every change
+  // Save history to localStorage
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
   }, [history]);
 
+  useEffect(() => {
+    if (isOpen && history.length === 0) {
+      const greeting = navigator.language.startsWith("he")
+        ? "היי! רוצה להכיר את הניסיון המקצועי שלי טוב יותר? מוזמן לשאול שאלה 😊"
+        : "Hi there! Curious about my professional experience? Feel free to ask me anything 😊";
+
+      setHistory([{ question: "", answer: greeting }]);
+    }
+  }, [isOpen]);
+
   async function ask() {
     if (!question.trim()) return;
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
-    });
-    const data = await res.json();
-    setHistory([...history, { question, answer: data.answer }]);
-    setQuestion("");
+    setLoading(true); // <-- הפעלת טעינה
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
+      const data = await res.json();
+      setHistory([...history, { question, answer: data.answer }]);
+      setQuestion("");
+    } catch (error) {
+      setHistory([
+        ...history,
+        { question, answer: "שגיאה. נסי שוב בעוד רגע." },
+      ]);
+    } finally {
+      setLoading(false); // <-- סיום טעינה
+    }
+  }
+
+  function clearHistory() {
+    setHistory([]);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
 
   return (
@@ -59,30 +88,63 @@ export default function ChatBot() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed bottom-0 right-0 w-full max-w-sm h-[70vh] bg-slate-900 border border-slate-700 rounded-t-2xl shadow-xl flex flex-col z-50"
+            className="fixed bottom-0 right-0 w-full max-w-sm h-[70vh] bg-slate-200 border border-slate-700 rounded-t-2xl shadow-xl flex flex-col z-50"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-slate-700">
-              <h3 className="text-slate-100 font-semibold text-lg">
-                Tech, skills, story – just ask 😉
+              <h3 className="text-slate-900 font-semibold text-lg">
+                Tech, skills, story – just ask
               </h3>
-              <button onClick={() => setIsOpen(false)}>
-                <XMarkIcon className="h-6 w-6 text-slate-400 hover:text-slate-200" />
-              </button>
+              <div className="flex gap-2 items-center">
+                {history.length > 0 && (
+                  <button
+                    className="text-xs text-slate-400 hover:text-pink-500"
+                    onClick={clearHistory}
+                  >
+                    Clear
+                  </button>
+                )}
+                <button onClick={() => setIsOpen(false)}>
+                  <XMarkIcon className="h-6 w-6 text-slate-400 hover:text-slate-200" />
+                </button>
+              </div>
             </div>
 
             {/* Chat History */}
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-4">
               {history.map((item, idx) => (
                 <div key={idx}>
-                  <div className="text-pink-400 font-semibold">You:</div>
-                  <div className="text-slate-200 mb-1">{item.question}</div>
-                  <div className="text-green-400 font-semibold">Hodaya:</div>
-                  <div className="text-slate-300 whitespace-pre-line">
-                    {item.answer}
+                  {item.question && (
+                    <>
+                      <div className="whitespace-pre-line">
+                        <ChatMessage
+                          message={item.question}
+                          type="question"
+                          direction="right"
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div className="whitespace-pre-line">
+                    <ChatMessage
+                      message={item.answer}
+                      type="answer"
+                      direction="left"
+                    />
                   </div>
                 </div>
               ))}
+              {loading && (
+                <div className="flex space-x-1 pt-1 pl-1">
+                  <span className="bg-green-400 rounded-full h-2 w-2 animate-bounce [animation-delay:.1s]"></span>
+                  <span className="bg-green-400 rounded-full h-2 w-2 animate-bounce [animation-delay:.2s]"></span>
+                  <span className="bg-green-400 rounded-full h-2 w-2 animate-bounce [animation-delay:.3s]"></span>
+                </div>
+              )}
+
+              {error && (
+                <div className="text-red-500 text-sm font-medium">{error}</div>
+              )}
             </div>
 
             {/* Input */}
@@ -92,15 +154,19 @@ export default function ChatBot() {
                   type="text"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
-                  placeholder="What is your field?"
+                  placeholder="Ask about my experience"
                   className="flex-1 bg-slate-800 text-slate-100 placeholder-slate-500 border border-slate-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
                   onKeyDown={(e) => e.key === "Enter" && ask()}
+                  disabled={loading}
                 />
                 <button
                   onClick={ask}
-                  className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded transition"
+                  disabled={loading}
+                  className={`${
+                    loading ? "bg-pink-400" : "bg-pink-600 hover:bg-pink-700"
+                  } text-white px-4 py-2 rounded transition`}
                 >
-                  Ask
+                  {loading ? "..." : "Ask"}
                 </button>
               </div>
             </div>
