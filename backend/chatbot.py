@@ -4,21 +4,21 @@ import os
 import json
 import requests
 import hashlib
+from typing import List
 
 router = APIRouter()
 
+# GROQ config
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_API_URL = os.getenv("GROQ_API_URL")
-GROQ_MODEL = os.getenv("GROQ_MODEL")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "mixtral-8x7b-32768")
 
 # --- In-memory cache --- #
 CACHE = {}
 
 def hash_question(question: str) -> str:
-    """Convert question to a unique cache key"""
     return hashlib.sha256(question.strip().lower().encode()).hexdigest()
 
-# --- Loads resume file once --- #
 def load_resume_context():
     with open("data/profile.json", encoding="utf-8") as f:
         profile = json.load(f)
@@ -52,8 +52,10 @@ When answering:
     - Or: "No, I don't have experience with X, but I have the ability and passion to learn it quickly."
 4. If the user asks a professional or technical question, always provide a direct and relevant answer based solely on the resume.
     Even if the information is not mentioned in the resume, do NOT add the phrase in point 5.
-5. 5. If the user asks anything unrelated to professional or technical topics (e.g., personal life), or if you cannot provide any relevant answer at all — respond only with:
-    "Only professional questions can be asked here. I am, of course, always happy to schedule a meeting and answer all relevant questions."
+5.  If the user asks anything unrelated to professional or technical topics (e.g., personal life), or if you cannot provide any relevant answer at all — respond only with:
+    "Only professional questions can be asked here. I am, of course, always happy to schedule a meeting and answer all relevant questions."(or the Hebrew equivalent)
+6.  If the user greets you with "hi", "hello", "היי", or "שלום" (and does not ask a question), respond with:
+"Hey, I'm Hodaya, happy to answer professional questions about me." (or the Hebrew equivalent).
 
 However, **if the current question is short or vague, but clearly follows a previous professional or technical question (e.g., a follow-up like “What about Angular?” after asking about PHP)** — treat it as part of the ongoing technical conversation and answer accordingly, without adding the above sentence.
 
@@ -69,7 +71,7 @@ Avoid sounding robotic — answer smoothly and personally in first person.
 
 Resume download logic:
 
-- When the user asks 2 or more technical questions in a row (e.g. about technologies, frameworks, experience), and if the resume was not offered yet — offer it.
+- After the user asks 2 or more technical questions  (e.g. about technologies, frameworks, experience), and if the resume was not offered yet —  offer it.
 
 - Example offer: "Would you like to receive my resume?"
 
@@ -98,19 +100,26 @@ if questions are unrelated (e.g. personal)
 
 """
 
-
-
+# --- Pydantic models --- #
+class Message(BaseModel):
+    role: str
+    content: str
 
 class ChatRequest(BaseModel):
-    question: str
+    messages: List[Message]
 
+# --- Main endpoint --- #
 @router.post("/api/chat")
 async def chat_endpoint(req: ChatRequest):
     try:
-        question = req.question.strip()
-        cache_key = hash_question(question)
+        messages = [{"role": "system", "content": SYSTEM_MESSAGE}] + [
+            {"role": m.role, "content": m.content} for m in req.messages
+        ]
 
-        # If the question has already been asked – return the answer from the cache
+        # Optional: Use only last user message for caching
+        last_user_message = next((m.content for m in reversed(req.messages) if m.role == "user"), "")
+        cache_key = hash_question(last_user_message)
+
         if cache_key in CACHE:
             return {"answer": CACHE[cache_key]}
 
@@ -121,18 +130,15 @@ async def chat_endpoint(req: ChatRequest):
 
         payload = {
             "model": GROQ_MODEL,
-            "messages": [
-                {"role": "system", "content": SYSTEM_MESSAGE},
-                {"role": "user", "content": question}
-            ]
+            "messages": messages
         }
 
-        response = requests.post(GROQ_API_URL, headers=headers, json=payload, verify=False)
+        response = requests.post(GROQ_API_URL, headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
 
         answer = result["choices"][0]["message"]["content"]
-        CACHE[cache_key] = answer  # Saves to cache
+        CACHE[cache_key] = answer
 
         return {"answer": answer}
 

@@ -39,24 +39,38 @@ export default function ChatBot() {
 
   async function ask() {
     if (!question.trim()) return;
-    setLoading(true); // <-- הפעלת טעינה
+    setLoading(true);
+    setError("");
+
+    const formattedMessages = history
+      .filter((m) => m.question || m.answer)
+      .flatMap((m) => [
+        m.question ? { role: "user", content: m.question } : null,
+        m.answer ? { role: "assistant", content: m.answer } : null,
+      ])
+      .filter(Boolean);
+
+    formattedMessages.push({ role: "user", content: question });
 
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({ messages: formattedMessages }),
       });
+
       const data = await res.json();
       setHistory([...history, { question, answer: data.answer }]);
       setQuestion("");
     } catch (error) {
+      console.error("Error asking question:", error);
       setHistory([
         ...history,
         { question, answer: "שגיאה. נסי שוב בעוד רגע." },
       ]);
+      setError("תקלה בשליחה. נסי שוב בעוד רגע.");
     } finally {
-      setLoading(false); // <-- סיום טעינה
+      setLoading(false);
     }
   }
 

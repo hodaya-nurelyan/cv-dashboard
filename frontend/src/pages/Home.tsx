@@ -26,6 +26,8 @@ import DynamicBackground from "../components/DynamicBackground";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import DownloadMenu from "../components/DownloadMenu";
 import FloatingShareMenu from "../components/FloatingShareMenu";
+import ContactForm from "../components/ContactForm";
+import ContactInfo from "../components/ContactInfo";
 
 interface Skill {
   name: string;
@@ -36,6 +38,7 @@ interface About {
   p1?: string;
   p2?: string;
   p3?: string;
+  p4?: string;
 }
 
 interface Experience {
@@ -115,6 +118,9 @@ export default function Home() {
             </h2>
 
             <p className="mt-4 max-w-xs leading-normal">{profile.summary}</p>
+            <div className="ml-1 mt-8 flex items-center block md:hidden">
+              <ContactInfo />
+            </div>
 
             <SideNav />
           </header>
@@ -125,18 +131,28 @@ export default function Home() {
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="About me"
             >
+              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  About
+                </h2>
+              </div>
               <p className="mb-4">{profile.about[0].p1}</p>
               <p className="mb-4">{profile.about[1].p2}</p>
               <p className="mb-4">{profile.about[2].p3}</p>
+              <p className="mb-4">{profile.about[3].p4}</p>
+
               <FloatingShareMenu />
             </section>
             <section
               id="experience"
-              className="scroll-mt-24"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="Work experience"
             >
-              <h3 className="text-2xl font-semibold mb-4">Experience</h3>
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"></div>
+              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  Experience
+                </h2>
+              </div>
               <div>
                 <ol className="group/list">
                   {profile.experience.map((job) => (
@@ -195,10 +211,15 @@ export default function Home() {
               <DownloadMenu />
             </section>
 
-            <section className="scroll-mt-24" id="education">
-              <h3 className="text-2xl font-semibold mb-4">
-                Online Learning & Courses
-              </h3>
+            <section
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              id="education"
+            >
+              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  Online Learning & Courses
+                </h2>
+              </div>
               <VerticalTimeline>
                 {profile.education.map((edu, idx) => (
                   <VerticalTimelineElement
@@ -272,8 +293,16 @@ export default function Home() {
               </div>
             </section> */}
 
-            <section className="scroll-mt-24" id="contact">
-              <h3 className="text-2xl font-semibold mb-4">Contact Me</h3>
+            <section
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              id="contact"
+            >
+              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  Contact Me
+                </h2>
+              </div>
+              <ContactForm />
             </section>
             <ChatBot />
           </main>
