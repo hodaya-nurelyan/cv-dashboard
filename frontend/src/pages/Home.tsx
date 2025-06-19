@@ -52,8 +52,9 @@ interface Experience {
 interface Project {
   name: string;
   description: string;
-  tech: string[];
-  github: string;
+  stack: string[];
+  link: string;
+  image: string
 }
 
 interface Profile {
@@ -73,15 +74,16 @@ interface Education {
   highlights: string[];
 }
 
-function getTechFrequency(projects: Project[]) {
-  const freq: { [key: string]: number } = {};
-  projects.forEach((p) => {
-    p.tech.forEach((t) => {
-      freq[t] = (freq[t] || 0) + 1;
-    });
-  });
-  return Object.entries(freq).map(([name, value]) => ({ name, value }));
-}
+
+// function getTechFrequency(projects: Project[]) {
+//   const freq: { [key: string]: number } = {};
+//   projects.forEach((p) => {
+//     p.tech.forEach((t) => {
+//       freq[t] = (freq[t] || 0) + 1;
+//     });
+//   });
+//   return Object.entries(freq).map(([name, value]) => ({ name, value }));
+// }
 
 export default function Home() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -131,8 +133,8 @@ export default function Home() {
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="About me"
             >
-              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
                   About
                 </h2>
               </div>
@@ -143,13 +145,16 @@ export default function Home() {
 
               <FloatingShareMenu />
             </section>
+
+
+
             <section
               id="experience"
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="Work experience"
             >
-              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
                   Experience
                 </h2>
               </div>
@@ -161,7 +166,7 @@ export default function Home() {
                         <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                         <header
                           className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
-                          aria-label="2024 to Present"
+                          aria-label="{job.years}"
                         >
                           {job.years}
                         </header>
@@ -170,10 +175,10 @@ export default function Home() {
                             <div>
                               <a
                                 className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
-                                href="https://askhodaya.com/"
+                                // href="https://askhodaya.com/"
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                aria-label="Senior Frontend Engineer, Accessibility at Klaviyo (opens in a new tab)"
+                                aria-label={job.title}
                               >
                                 <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                                 <span>
@@ -183,12 +188,7 @@ export default function Home() {
                             </div>
                           </h3>
                           <p className="mt-2 text-sm leading-normal">
-                            Build and maintain critical components used to
-                            construct Klaviyo’s frontend, across the whole
-                            product. Work closely with cross-functional teams,
-                            including developers, designers, and product
-                            managers, to implement and advocate for best
-                            practices in web accessibility.
+                            {job.highlights}
                           </p>
                           <ul
                             className="mt-2 flex flex-wrap"
@@ -211,12 +211,87 @@ export default function Home() {
               <DownloadMenu />
             </section>
 
+
             <section
+              id="projects"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="Projects"
+            >
+              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  Projects
+                </h2>
+              </div>
+              <div>
+                <ol className="group/list">
+                  {profile.projects.map((project) => (
+                    <li key={project.name} className="mb-12">
+                      <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                        <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+
+                        <div className="z-10 sm:order-2 sm:col-span-6">
+                          <h3 className="font-medium leading-snug text-slate-200">
+                            <div>
+                              <a
+                                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
+                                href={project.link}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                aria-label="Project"
+                              >
+                                <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
+                                <span>
+                                  {project.name}
+                                </span>
+                              </a>
+                            </div>
+                          </h3>
+                          <p className="mt-2 text-sm leading-normal">
+                            {project.description}
+                          </p>
+                          <ul
+                            className="mt-2 flex flex-wrap"
+                            aria-label="Technologies used"
+                          >
+                            {project.stack.map((h, idx) => (
+                              <li key={idx} className="mr-1.5 mt-2">
+                                <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 ">
+                                  {h}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div
+                          className=" sm:col-span-2"
+
+                        >
+                          {project.image && (
+                            <img alt="Build a Spotify Connected App Newline course marketing card"
+                              loading="lazy"
+                              width="200"
+                              height="48"
+                              className="aspect-video object-cover rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
+                              style={{ color: "transparent" }}
+                              src={project.image} />
+                          )}
+
+                        </div>
+
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <DownloadMenu />
+            </section>
+
+            {/* <section
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               id="education"
             >
-              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
                   Online Learning & Courses
                 </h2>
               </div>
@@ -241,7 +316,7 @@ export default function Home() {
                   </VerticalTimelineElement>
                 ))}
               </VerticalTimeline>
-            </section>
+            </section> */}
 
             {/* <section className="scroll-mt-24" id="skills">
               <h3 className="text-2xl font-semibold mb-2">
@@ -297,8 +372,8 @@ export default function Home() {
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               id="contact"
             >
-              <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
                   Contact Me
                 </h2>
               </div>

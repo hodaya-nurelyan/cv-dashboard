@@ -9,4 +9,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  server: {
+    host: true, // כדי שיהיה נגיש מחוץ לקונטיינר
+    watch: {
+      usePolling: true, // חובה עבור Docker על Windows/WSL
+    },
+  },
 });

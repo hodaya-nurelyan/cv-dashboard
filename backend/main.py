@@ -38,13 +38,7 @@ app = FastAPI()
 
 ALLOWED_ORIGINS = os.environ.get("DOMAIN_NAME", "*").split(",")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 # app.add_middleware(
 #     CORSMiddleware,
@@ -60,19 +54,22 @@ def get_profile():
     with open("data/profile.json", encoding="utf-8") as f:
         return json.load(f)
 
-# הגדרות CORS
+# # הגדרות CORS
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# קריאה לקובץ הפרופיל
-@app.get("/api/profile")
-def get_profile():
-    with open("data/profile.json", encoding="utf-8") as f:
-        return json.load(f)
 
 # כולל את הרואטרים
 app.include_router(chatbot_router)

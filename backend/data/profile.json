@@ -3,70 +3,132 @@
   "title": "Full Stack Developer",
   "summary": "Full Stack Team Leader with over a decade of experience in software engineering.",
   "about": [
-    {"p1":"Hi! I'm Hodaya Nurelyan – a Full Stack Developer, Team Leader, and lifelong tech enthusiast with over 12 years of experience (but who's counting?)."},
-    {"p2":"Throughout my career, I've built complex systems, smart platforms, websites, and digital products – basically anything that can go from idea to reality with some code and a lot of thoughtful design. I love turning complicated challenges into simple, elegant solutions that not only work smoothly but also look great."},
-    {"p3":"I'm a strong believer in lifelong learning and truly enjoy mentoring junior developers. I'm always striving to grow – both technically and personally. I thrive in dynamic, agile environments and enjoy the challenge of solving complex problems while transforming them into intuitive, user-friendly experiences."},
-    {"p4":"The mix of creativity and technical precision is what drives me – bringing ideas to life, exploring new technologies, and staying endlessly curious, and when I'm not writing code... I'm probably just thinking about the next one."}
+    {
+      "p1": "Hi! I'm Hodaya Nurelyan – a Full Stack Developer, Team Leader, and lifelong tech enthusiast with over 12 years of experience (but who's counting?)."
+    },
+    {
+      "p2": "Throughout my career, I've built complex systems, smart platforms, websites, and digital products – basically anything that can go from idea to reality with some code and a lot of thoughtful design. I love turning complicated challenges into simple, elegant solutions that not only work smoothly but also look great."
+    },
+    {
+      "p3": "I'm a strong believer in lifelong learning and truly enjoy mentoring junior developers. I'm always striving to grow – both technically and personally. I thrive in dynamic, agile environments and enjoy the challenge of solving complex problems while transforming them into intuitive, user-friendly experiences."
+    },
+    {
+      "p4": "The mix of creativity and technical precision is what drives me – bringing ideas to life, exploring new technologies, and staying endlessly curious, and when I'm not writing code... I'm probably just thinking about the next one."
+    }
   ],
   "education": [
-  {
-    "school": "Technion – Israel Institute of Technology",
-    "degree": "B.Sc. in Computer Science",
-    "years": "2018 – 2022",
-    "highlights": [
-      "Specialized in software engineering and AI",
-      "Graduated with honors (GPA: 90)",
-      "Led a final project using React and TensorFlow"
-    ]
-  },
-  {
-    "school": "Udemy (Online)",
-    "degree": "Advanced React and TypeScript",
-    "years": "2023",
-    "highlights": [
-      "Built full-stack apps with React, Node.js, and TypeScript",
-      "Learned advanced component architecture and state management"
-    ]
-  }
+    {
+      "school": "Mahat - Government institute for technology training",
+      "degree": "Diploma in Software engineering",
+      "years": "2008-2011"
+    }
   ],
-
   "skills": [
-    { "name": "React", "level": 90 },
-    { "name": "Python", "level": 95 },
-    { "name": "AWS", "level": 70 },
-    { "name": "php", "level": 90 },
-    { "name": "javascript", "level": 95 },
-    { "name": "AWS", "level": 70 },
-    { "name": "css", "level": 70 }
+    {
+      "name": "React",
+      "level": 90
+    },
+    {
+      "name": "Python",
+      "level": 95
+    },
+    {
+      "name": "AWS",
+      "level": 70
+    },
+    {
+      "name": "php",
+      "level": 90
+    },
+    {
+      "name": "javascript",
+      "level": 95
+    },
+    {
+      "name": "AWS",
+      "level": 70
+    },
+    {
+      "name": "css",
+      "level": 70
+    }
   ],
   "experience": [
     {
       "company": "Signature-IT",
       "title": "Full Stack Developer / Team Leader",
       "years": "2016–Present",
-      "stack": ["Python", "FastAPI", "PostgreSQL", "Docker"],
+      "stack": [
+        "PHP",
+        "Python",
+        "React",
+        "Angular",
+        "JavaScript",
+        "Bootstrap",
+        "MySQL",
+        "REST APIs",
+        "OpenAI API",
+        "GitHub Copilot",
+        "Prompt/Agents engineering",
+        "Docker",
+        "AWS",
+        "Git",
+        "CI/CD",
+        "Linux"
+      ],
       "highlights": [
-        "הובלתי מיגרציה למיקרו־שירותים",
-        "שיפרתי ביצועים ב־40%"
+        "As a Senior Full Stack Developer & Team Leader at Signature IT, I led the development of an enterprise-grade B2B SaaS platform (PIM) tailored for government and large-scale clients. I integrated AI and LLM technologies, designed a smart multilingual CMS, and optimized system performance. I collaborated on architectural planning, implemented modular infrastructure, Additionally, I mentored developers, conducted code reviews, and consistently delivered high-quality solutions within an Agile environment. Alongside my professional role, I’ve also built several independent projects, allowing me to deepen my expertise with cutting-edge technologies expanding both my technical skills and product thinking."
       ]
     },
     {
       "company": "Linnovate",
       "title": "Full Stack Developer",
       "years": "2012–2016",
-      "stack": ["React", "Node.js", "MongoDB"],
+      "stack": [
+        "PHP",
+        "jQuery",
+        "JavaScript",
+        "Bootstrap",
+        "HTML5",
+        "CSS3",
+        "MySQL",
+        "REST APIs",
+        "Git",
+        "CI/CD",
+        "Linux"
+      ],
       "highlights": [
-        "בניית מערכת לניהול תשלומים מאובטחת",
-        "הכנסת בדיקות CI/CD"
+        "I developed full-stack web solutions using WordPress and Drupal platforms. I built custom CMS functionalities tailored to client needs and integrated RESTful APIs for seamless system communication. I designed pixel-perfect, responsive websites with a strong focus on user experience and cross-device compatibility, ensuring high-quality and accessible web applications."
       ]
     }
   ],
   "projects": [
     {
       "name": "AI Resume Booster",
-      "description": "מערכת לחיזוק קורות חיים בעזרת GPT",
-      "tech": ["React", "Python", "OpenAI API"],
-      "github": "https://github.com/mor/resume-booster"
+      "description": "A resume strengthening system combined with AI",
+      "stack": [
+        "React",
+        "Python",
+        "OpenAI API",
+        "FastAPI",
+        "AWS",
+        "Docker"
+      ],
+      "link": "https://askhodaya.com/",
+      "image": "/my-site.png"
+    },
+    {
+      "name": "QuickQuote",
+      "description": "Generate Beautiful Quotes That Win More Business , QuickQuote helps freelancers and small businesses create professional, branded price quotes that impress clients and close deals faster.",
+      "stack": [
+        "React",
+        "Python",
+        "Ssupabase",
+        "AWS",
+        "Docker"
+      ],
+      "link": "https://askhodaya.com/",
+      "image": "/quickquote-site.png"
     }
   ]
 }

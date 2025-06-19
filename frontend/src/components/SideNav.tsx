@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const items = [
   { href: "#about", id: "about", label: "About" },
   { href: "#experience", id: "experience", label: "Experience" },
-  { href: "#education", id: "education", label: "Education" },
+  { href: "#projects", id: "projects", label: "Projects" },
   { href: "#contact", id: "contact", label: "Contact" },
 ];
 
@@ -40,18 +40,16 @@ const SideNav = () => {
           <li key={item.href}>
             <a className="group flex items-center py-3" href={item.href}>
               <span
-                className={`nav-indicator mr-4 h-px transition-all ${
-                  activeId === item.id
+                className={`nav-indicator mr-4 h-px transition-all ${activeId === item.id
                     ? "w-16 bg-slate-200"
                     : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
-                }`}
+                  }`}
               />
               <span
-                className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors ${
-                  activeId === item.id
+                className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors ${activeId === item.id
                     ? "text-slate-200"
                     : "text-slate-500 group-hover:text-slate-200"
-                }`}
+                  }`}
               >
                 {item.label}
               </span>
