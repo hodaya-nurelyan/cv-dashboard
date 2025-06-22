@@ -16,12 +16,12 @@ services:
     build:
       context: ./frontend
       args:
-        NODE_ENV: production
+        NODE_ENV: development
     container_name: cv_frontend_staging
     ports:
       - "5174:5173"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
 
     env_file:
       - ./frontend/.env
