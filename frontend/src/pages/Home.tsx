@@ -109,25 +109,27 @@ export default function Home() {
           Skip to Content
         </a>
         <div className="lg:flex lg:justify-between lg:gap-4">
-          <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[40%] lg:flex-col lg:justify-between lg:py-24">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl flex items-center gap-2">
-              <SparklesIcon className="h-7 w-7 text-pink-500 animate-pulse" />
-              <a href="/">{profile.name}</a>
-            </h1>
+          <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[48%] lg:flex-col lg:justify-between lg:py-24">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl flex items-center gap-2">
+                <SparklesIcon className="h-7 w-7 text-pink-500 animate-pulse" />
+                <a href="/">{profile.name}</a>
+              </h1>
 
-            <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
-              {profile.title}
-            </h2>
+              <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
+                {profile.title}
+              </h2>
 
-            <p className="mt-4 max-w-xs leading-normal">{profile.summary}</p>
-            <div className="ml-1 mt-8 flex items-center block md:hidden">
-              <ContactInfo />
+              <p className="mt-4 max-w-xs leading-normal">{profile.summary}</p>
+              <div className="ml-1 mt-8 flex items-center block md:hidden">
+                <ContactInfo />
+              </div>
+
+              <SideNav />
             </div>
-
-            <SideNav />
           </header>
 
-          <main id="content" className="pt-24 lg:w-[60%] lg:py-24">
+          <main id="content" className="pt-24 lg:w-[52%] lg:py-24">
             <section
               id="about"
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
