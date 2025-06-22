@@ -18,6 +18,9 @@ services:
     container_name: cv_frontend_staging
     ports:
       - "5174:5173"
+    environment:
+      - NODE_ENV=production
+
     env_file:
       - ./frontend/.env
     depends_on:
@@ -28,6 +31,4 @@ services:
 networks:
   cv_net:
 
-environment:
-  - NODE_ENV=production
 
