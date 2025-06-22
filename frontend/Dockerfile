@@ -2,20 +2,18 @@ FROM node:20
 
 WORKDIR /app
 
-# נבטיח שנדלג על חבילות אופציונליות וננקה קאש
 ENV npm_config_optional=false
 
-# נתחיל מהתלויות
+# שלב ראשון: העתקת package.json
 COPY package*.json ./
 
-# נבצע התקנה נקייה לגמרי
-RUN rm -rf node_modules package-lock.json && npm install --omit=optional
+# פתרון הבאג של rollup: מחיקת node_modules ו-package-lock.json אם קיימים
+RUN rm -rf node_modules package-lock.json \
+    && npm install
 
-# נוסיף את שאר קבצי הפרויקט
+# שלב שני: העתקת שאר הפרויקט
 COPY . .
 
-# פותחים את הפורט ש-Vite מריץ עליו
 EXPOSE 3000
 
-# מריצים את השרת עם האופציה --host כדי שזרים יוכלו לגשת
 CMD ["npm", "run", "dev", "--", "--host"]
