@@ -1,19 +1,30 @@
-FROM node:20
+# שלב 1: בניית הפרויקט
+FROM node:20 AS builder
 
 WORKDIR /app
 
 ENV npm_config_optional=false
 
-# שלב ראשון: העתקת package.json
 COPY package*.json ./
+RUN npm install
 
-# פתרון הבאג של rollup: מחיקת node_modules ו-package-lock.json אם קיימים
-RUN rm -rf node_modules package-lock.json \
-    && npm install
-
-# שלב שני: העתקת שאר הפרויקט
 COPY . .
 
-EXPOSE 3000
+# אם הפקודה היא production – נבנה את האתר
+RUN if [ "$NODE_ENV" = "production" ]; then npm run build; fi
 
-CMD ["npm", "run", "dev", "--", "--host"]
+# שלב 2: הרצת dev או prod
+FROM node:20 AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=development
+
+# נעתיק את node_modules כי Dev צריך אותם
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app ./
+
+EXPOSE 5173
+
+# Dev mode – run Vite dev server
+CMD ["sh", "-c", "if [ \"$NODE_ENV\" = \"production\" ]; then npm install -g serve && serve -s dist -l 5173; else npm run dev -- --host; fi"]

@@ -27,3 +27,7 @@ services:
 
 networks:
   cv_net:
+
+environment:
+  - NODE_ENV=production
+
