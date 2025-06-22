@@ -3,32 +3,30 @@ FROM node:20 AS builder
 
 WORKDIR /app
 
-ARG NODE_ENV=development
-ENV NODE_ENV=$NODE_ENV
 ENV npm_config_optional=false
+ENV NODE_ENV=development
 
 COPY package*.json ./
 RUN npm install
 
 COPY . .
 
-# רק ב-production נריץ build
-RUN if [ "$NODE_ENV" = "production" ]; then npm run build; fi
+ENV NODE_ENV=production
+RUN npm run build
 
-# שלב 2: הרצת dev או prod
+# שלב 2: הרצת הפרויקט ב-production
 FROM node:20 AS runner
 
 WORKDIR /app
 
-ARG NODE_ENV=development
-ENV NODE_ENV=$NODE_ENV
+ENV NODE_ENV=production
 
-# במקרה של production – נעתיק את התוצר ונריץ serve
-# במקרה של dev – נעתיק את הקוד המלא ונריץ dev server
-COPY --from=builder /app /app
+# התקנת serve לשרת את הקבצים הסטטיים
+RUN npm install -g serve
 
-RUN if [ "$NODE_ENV" = "production" ]; then npm install -g serve; fi
+# העתקת תיקיית ה-build בלבד
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 5173
 
-CMD ["sh", "-c", "if [ \"$NODE_ENV\" = \"production\" ]; then serve -s dist -l 5173; else npm run dev -- --host; fi"]
+CMD ["serve", "-s", "dist", "-l", "5173"]
