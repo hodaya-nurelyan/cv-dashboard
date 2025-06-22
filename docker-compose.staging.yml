@@ -11,6 +11,7 @@ services:
       - ./backend/.env
     networks:
       - cv_net
+    restart: unless-stopped
 
   frontend:
     build:
@@ -22,15 +23,14 @@ services:
       - "5174:5173"
     environment:
       - NODE_ENV=production
-
+      - ROLLUP_FORCE_JS=true
     env_file:
       - ./frontend/.env
     depends_on:
       - backend
     networks:
       - cv_net
+    restart: unless-stopped
 
 networks:
   cv_net:
-
-
