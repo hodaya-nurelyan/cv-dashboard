@@ -17,7 +17,7 @@ services:
       context: ./frontend
     container_name: cv_frontend_prod
     ports:
-      - "5175:5173"
+      - "5175:80"
     environment:
       - NODE_ENV=production
     env_file:
