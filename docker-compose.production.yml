@@ -1,32 +1,31 @@
-version: "3.8"
+name: Deploy to EC2 on Push
 
-services:
-  backend:
-    build:
-      context: ./backend
-    container_name: cv_backend_prod
-    ports:
-      - "8200:8000"
-    env_file:
-      - ./backend/.env.production
-    networks:
-      - cv_net
+on:
+  push:
+    branches:
+      - main  # עדכני אם את עובדת על ענף אחר
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.prod
-    container_name: cv_frontend_prod
-    ports:
-      - "5175:80"
-    environment:
-      - NODE_ENV=production
-    env_file:
-      - ./frontend/.env.production
-    depends_on:
-      - backend
-    networks:
-      - cv_net
+jobs:
+  deploy:
+    name: Build & Deploy to EC2
+    runs-on: ubuntu-latest
 
-networks:
-  cv_net:
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            cd ~/cv-dashboard   # ודאי שזה הנתיב בשרת שלך
+            git pull origin main
+            docker-compose -f docker-compose.production.yml build
+            docker-compose -f docker-compose.production.yml up -d
+            docker image prune -f
+          EOF
