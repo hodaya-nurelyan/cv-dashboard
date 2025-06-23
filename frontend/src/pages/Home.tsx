@@ -140,6 +140,7 @@ export default function Home() {
                   About
                 </h2>
               </div>
+              testtttt
               <p className="mb-4">{profile.about[0].p1}</p>
               <p className="mb-4">{profile.about[1].p2}</p>
               <p className="mb-4">{profile.about[2].p3}</p>
