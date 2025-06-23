@@ -15,6 +15,7 @@ services:
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile.prod
     container_name: cv_frontend_prod
     ports:
       - "5175:80"
