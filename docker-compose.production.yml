@@ -6,22 +6,22 @@ services:
       context: ./backend
     container_name: cv_backend_prod
     ports:
-      - "8000:8000"
+      - "8200:8000"
     env_file:
-      - ./backend/.env
+      - ./backend/.env.production
     networks:
       - cv_net
 
   frontend:
     build:
       context: ./frontend
-      args:
-        - NODE_ENV=production
     container_name: cv_frontend_prod
     ports:
-      - "5173:5173"
+      - "5175:5173"
     environment:
       - NODE_ENV=production
+    env_file:
+      - ./frontend/.env.production
     depends_on:
       - backend
     networks:
