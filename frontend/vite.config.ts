@@ -11,6 +11,7 @@ export default defineConfig({
   },
   server: {
     host: true, // כדי שיהיה נגיש מחוץ לקונטיינר
+    port: 5173,
     watch: {
       usePolling: true, // חובה עבור Docker על Windows/WSL
     },

@@ -1,35 +1,20 @@
-# שלב 1: בניית הפרויקט
-FROM node:20 AS builder
+# שלב בסיסי לפיתוח עם שרת Vite
+FROM node:20
 
 WORKDIR /app
 
-# מוודאים התקנה נקייה + עדכון npm לגרסה עדכנית
+# העתקת קבצי package כדי להתקין רק מה שצריך
 COPY package*.json ./
-RUN rm -rf node_modules package-lock.json && npm install -g npm@latest
+
+# התקנת תלויות כולל devDependencies
 RUN npm install
 
-# העתקת קוד
+# העתקת שאר הקבצים
 COPY . .
 
-# משתנים חשובים להפעלת build בלי בעיות
-ENV ROLLUP_FORCE_JS=true
-ENV NODE_ENV=production
-ENV npm_config_optional=false
-
-# הפעלת build
-RUN npm run build
-
-# שלב 2: הרצת הפרויקט בקונטיינר מינימלי
-FROM node:20 AS runner
-
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-RUN npm install -g serve
-
-COPY --from=builder /app/dist ./dist
-
+# פורט ש־Vite מאזין עליו בסביבה מקומית
 EXPOSE 5173
 
-CMD ["serve", "-s", "dist", "-l", "5173"]
+# הרצה עם Vite במצב דב
+CMD ["npm", "run", "dev", "--", "--host"]
+
