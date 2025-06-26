@@ -28,6 +28,7 @@ import DownloadMenu from "../components/DownloadMenu";
 import FloatingShareMenu from "../components/FloatingShareMenu";
 import ContactForm from "../components/ContactForm";
 import ContactInfo from "../components/ContactInfo";
+import Loader from "../components/Loader";
 
 interface Skill {
   name: string;
@@ -96,7 +97,7 @@ export default function Home() {
       .then(setProfile);
   }, []);
 
-  if (!profile) return <div className="p-6">Loading...</div>;
+  if (!profile) return <Loader />
 
   return (
     <>
