@@ -17,7 +17,7 @@ export function ChatMessage({
   const isHebrew = /[\u0590-\u05FF]/.test(message);
   const textDirection = direction === "right" ? "rtl" : "ltr";
   const directionClass = direction === "right" ? "right" : "left";
-  const color = type == "question" ? "teal-400/10" : "slate-900";
+  const color = type == "question" ? "white" : "slate-900";
 
   const triangleDirection =
     direction === "right"
@@ -43,9 +43,8 @@ export function ChatMessage({
 
       {!hasDownloadCall && (
         <div
-          className={`flex items-start space-x-2 py-2 ${
-            direction === "right" ? "space-x-reverse" : ""
-          }`}
+          className={`flex items-start space-x-2  py-2 ${direction === "right" ? " space-x-reverse" : ""
+            }`}
           dir={textDirection}
         >
           {type === "answer" && (
@@ -57,18 +56,16 @@ export function ChatMessage({
           )}
 
           <div
-            className={`relative  rounded-xl px-4 py-2 max-w-xs text-${directionClass}   ${
-              type == "question"
-                ? "text-slate-900  bg-teal-400/10"
-                : "bg-slate-900"
-            }`}
+            className={`font-semibold relative  rounded-xl px-4 py-2 max-w-xs text-${directionClass}   ${type == "question"
+              ? "text-slate-900  bg-white"
+              : "bg-slate-900"
+              }`}
           >
             {/* חץ שמאלה (כמו bubble) */}
             <div className={triangleClassName} />
             <div
-              className={`${
-                isHebrew ? "dir-rtl text-right" : "dir-ltr text-left"
-              } `}
+              className={`${isHebrew ? "dir-rtl text-right" : "dir-ltr text-left"
+                } `}
               dangerouslySetInnerHTML={{ __html: cleanText(message) }}
             />
           </div>
@@ -80,7 +77,7 @@ export function ChatMessage({
         <a
           href="/cv/hodaya-resume.pdf"
           download
-          className="inline-block mt-3 px-4 py-2 bg-pink-600  rounded-xl shadow-lg hover:bg-pink-700 hover:scale-105 transition-transform duration-200"
+          className="inline-block mt-3 px-4 py-2 text-white bg-magenta-custom  rounded-xl shadow-lg hover:bg-brand-start  transition-transform duration-200"
         >
           {downloadText}
         </a>

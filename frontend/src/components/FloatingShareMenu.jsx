@@ -29,7 +29,7 @@ export default function ShareMenu() {
     >
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center font-medium text-base text-slate-200 hover:text-teal-300 transition-colors"
+        className="inline-flex items-center font-medium text-base text-slate-200 hover:text-magenta-custom transition-colors"
         title="Share My CV"
       >
         Share My CV
@@ -44,28 +44,28 @@ export default function ShareMenu() {
       >
         <button
           onClick={() => shareProfile("email")}
-          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-teal-300 transition"
+          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-magenta-custom transition"
           title="Email"
         >
           <Mail className="w-4 h-4" />
         </button>
         <button
           onClick={() => shareProfile("whatsapp")}
-          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-teal-300 transition"
+          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-magenta-custom transition"
           title="WhatsApp"
         >
           <MessageCircleMore className="w-4 h-4" />
         </button>
         <button
           onClick={() => shareProfile("linkedin")}
-          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-teal-300 transition"
+          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-magenta-custom transition"
           title="LinkedIn"
         >
           <Linkedin className="w-4 h-4" />
         </button>
         <button
           onClick={() => shareProfile("link")}
-          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-teal-300 transition"
+          className="flex items-center rounded-full bg-teal-400/10 px-3 py-3 text-xs font-medium leading-5 text-magenta-custom transition"
           title="Copy Link"
         >
           <Link className="w-4 h-4" />

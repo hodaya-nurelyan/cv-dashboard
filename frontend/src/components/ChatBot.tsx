@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { SparklesIcon, XMarkIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChatMessage } from "./ChatMessage";
 
@@ -82,16 +82,41 @@ export default function ChatBot() {
   return (
     <>
       {/* Floating Button */}
-      <motion.button
+      {/* <motion.button
         className="fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-lg"
-        style={{ backgroundColor: "#d946ef" }}
+        style={{ backgroundColor: "#ec4899" }}
         whileHover={{ scale: 1.1 }}
         animate={{ scale: [1, 1.05, 1] }}
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
         onClick={() => setIsOpen(true)}
       >
         <SparklesIcon className="h-7 w-7" />
+      </motion.button> */}
+
+
+      <motion.button
+        className="fixed bottom-6 right-6 z-50 flex items-center rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-orange-400 px-4 py-2 text-sm font-medium text-white shadow-lg"
+        whileHover={{ scale: 1.1 }}
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        onClick={() => setIsOpen(true)}
+      >
+        <SparklesIcon className="h-7 w-7" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+          className="h-5 w-5"
+        >
+          <path
+            fillRule="evenodd"
+            d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5Z"
+            clipRule="evenodd"
+          />
+        </svg>
       </motion.button>
+
 
       {/* Chat Panel */}
       <AnimatePresence>
@@ -102,35 +127,29 @@ export default function ChatBot() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed bottom-0 right-0 w-full max-w-sm h-[70vh] bg-slate-200 border border-slate-700 rounded-t-2xl shadow-xl flex flex-col z-50"
+            className="fixed bottom-0 right-0 w-full max-w-sm h-[70vh] bg-stone-100 border border-slate-300  rounded-t-2xl shadow-xl flex flex-col z-50"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-slate-700">
+            <div className="relative p-4 border-b border-slate-300 text-center">
               <h3 className="text-slate-900 font-semibold text-lg">
                 Tech, skills, story – just ask
               </h3>
-              <div className="flex gap-2 items-center">
-                {history.length > 0 && (
-                  <button
-                    className="text-xs text-slate-400 hover:text-pink-500"
-                    onClick={clearHistory}
-                  >
-                    Clear
-                  </button>
-                )}
-                <button onClick={() => setIsOpen(false)}>
-                  <XMarkIcon className="h-6 w-6 text-slate-400 hover:text-slate-200" />
-                </button>
-              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute right-4 top-1/2 -translate-y-1/2"
+              >
+                <ChevronDownIcon className="h-6 w-6 text-slate-400 hover:text-slate-200" />
+              </button>
             </div>
 
+
             {/* Chat History */}
-            <div className="flex-1 overflow-y-auto px-4 py-2 space-y-4">
+            <div className="flex-1 overflow-y-auto   py-2 ">
               {history.map((item, idx) => (
                 <div key={idx}>
                   {item.question && (
                     <>
-                      <div className="whitespace-pre-line">
+                      <div className="whitespace-pre-line px-4">
                         <ChatMessage
                           message={item.question}
                           type="question"
@@ -139,7 +158,7 @@ export default function ChatBot() {
                       </div>
                     </>
                   )}
-                  <div className="whitespace-pre-line">
+                  <div className="whitespace-pre-line px-2">
                     <ChatMessage
                       message={item.answer}
                       type="answer"
@@ -149,10 +168,10 @@ export default function ChatBot() {
                 </div>
               ))}
               {loading && (
-                <div className="flex space-x-1 pt-1 pl-1">
-                  <span className="bg-green-400 rounded-full h-2 w-2 animate-bounce [animation-delay:.1s]"></span>
-                  <span className="bg-green-400 rounded-full h-2 w-2 animate-bounce [animation-delay:.2s]"></span>
-                  <span className="bg-green-400 rounded-full h-2 w-2 animate-bounce [animation-delay:.3s]"></span>
+                <div className="flex space-x-1 px-4 pt-1 ">
+                  <span className="bg-slate-900 rounded-full h-2 w-2 animate-bounce [animation-delay:.1s]"></span>
+                  <span className="bg-slate-900 rounded-full h-2 w-2 animate-bounce [animation-delay:.2s]"></span>
+                  <span className="bg-slate-900 rounded-full h-2 w-2 animate-bounce [animation-delay:.3s]"></span>
                 </div>
               )}
 
@@ -162,23 +181,23 @@ export default function ChatBot() {
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-slate-700">
+            <div className="p-4 border-t border-slate-300 ">
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder="Ask about my experience"
-                  className="flex-1 bg-slate-800 text-slate-100 placeholder-slate-500 border border-slate-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-                  onKeyDown={(e) => e.key === "Enter" && ask()}
+                  className="flex-1 bg-white text-slate-800 placeholder-slate-500 border border-slate-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  onKeyDown={(e) => e.key === 'Enter' && ask()}
                   disabled={loading}
                 />
+
                 <button
                   onClick={ask}
                   disabled={loading}
-                  className={`${
-                    loading ? "bg-pink-400" : "bg-pink-600 hover:bg-pink-700"
-                  } text-white px-4 py-2 rounded transition`}
+                  className={`${loading ? "bg-pink-400" : "bg-gradient-brand hover:bg-pink-700 font-bold"
+                    } text-white px-4 py-2 rounded transition`}
                 >
                   {loading ? "..." : "Ask"}
                 </button>

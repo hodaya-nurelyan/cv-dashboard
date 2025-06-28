@@ -5,7 +5,7 @@ export default function ContactInfo() {
     <div className="space-y-6 text-white">
       {/* Location */}
       <div className="flex items-start gap-4">
-        <MapPin className="text-teal-300 mt-1" />
+        <MapPin className="text-magenta-custom mt-1" />
         <div>
           <h4 className="font-semibold">Location</h4>
           <p>Tel Aviv, Israel</p>
@@ -14,12 +14,12 @@ export default function ContactInfo() {
 
       {/* Email */}
       <div className="flex items-start gap-4">
-        <Mail className="text-teal-300 mt-1" />
+        <Mail className="text-magenta-custom mt-1" />
         <div>
           <h4 className="font-semibold">Email</h4>
           <a
             href="mailto:hodaya.yd@gmail.com"
-            className="text-teal-300 underline"
+            className="underline"
           >
             hodaya.yd@gmail.com
           </a>
@@ -30,7 +30,7 @@ export default function ContactInfo() {
       <div className="flex items-start gap-4">
         {/* לינקדאין כ-SVG כי Lucide לא כולל אותו */}
         <svg
-          className="text-teal-300 mt-1"
+          className="text-magenta-custom mt-1"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -45,7 +45,7 @@ export default function ContactInfo() {
             href="https://www.linkedin.com/in/hodaya-nurelyan/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-teal-300 underline"
+            className=" underline"
           >
             linkedin.com/in/hodaya-nurelyan
           </a>

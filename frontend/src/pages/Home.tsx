@@ -113,7 +113,7 @@ export default function Home() {
           <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[48%] lg:flex-col lg:justify-between lg:py-24">
             <div>
               <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl flex items-center gap-2">
-                <SparklesIcon className="h-7 w-7 text-pink-500 animate-pulse" />
+                <SparklesIcon className="h-7 w-7 animate-color-pulse" />
                 <a href="/">{profile.name}</a>
               </h1>
 
@@ -178,7 +178,7 @@ export default function Home() {
                           <h3 className="font-medium leading-snug text-slate-200">
                             <div>
                               <a
-                                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
+                                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-magenta-custom focus-visible:text-magenta-custom  group/link text-base"
                                 // href="https://askhodaya.com/"
                                 target="_blank"
                                 rel="noreferrer noopener"
@@ -200,9 +200,7 @@ export default function Home() {
                           >
                             {job.stack.map((h, idx) => (
                               <li key={idx} className="mr-1.5 mt-2">
-                                <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 ">
-                                  {h}
-                                </div>
+                                <span className="badge-gradient-border"><span>  {h}</span></span>
                               </li>
                             ))}
                           </ul>
@@ -237,7 +235,7 @@ export default function Home() {
                           <h3 className="font-medium leading-snug text-slate-200">
                             <div>
                               <a
-                                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300  group/link text-base"
+                                className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-magenta-custom focus-visible:text-magenta-custom  group/link text-base"
                                 href={project.link}
                                 target="_blank"
                                 rel="noreferrer noopener"
@@ -259,9 +257,14 @@ export default function Home() {
                           >
                             {project.stack.map((h, idx) => (
                               <li key={idx} className="mr-1.5 mt-2">
-                                <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 ">
+                                {/* <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-magenta-custom ">
                                   {h}
-                                </div>
+                                </div> */}
+
+                                <span className="badge-gradient-border">
+                                  <span> {h}</span>
+                                </span>
+
                               </li>
                             ))}
                           </ul>

@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://rsms.me/inter/inter.css');
+
+/* Optional font features */
+body {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter var', sans-serif;
+}
+
+.dir-rtl {
+  direction: rtl;
+}
+
+.dir-ltr {
+  direction: ltr;
+}
+
+.vertical-timeline--animate .vertical-timeline-element-icon.bounce-in {
+  background: rgb(45 212 191) !important;
+}
+
+.badge-gradient-border {
+  @apply relative inline-flex items-center rounded-full p-[1px] bg-gradient-to-r from-pink-500 via-purple-500 to-orange-400;
+}
+
+.badge-gradient-border>span {
+  @apply flex items-center rounded-full px-3 py-1 text-xs font-medium leading-5 bg-slate-900 text-white;
+}
 
 @media only screen and (min-width: 1170px) {
   .vertical-timeline.vertical-timeline--two-columns {
@@ -9,21 +40,4 @@
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-
-.vertical-timeline--animate .vertical-timeline-element-icon.bounce-in{
-    background: rgb(45 212 191) !important;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-.dir-rtl{
-  direction: rtl;
-}
-
-.dir-ltr{
-  direction: ltr;
 }
