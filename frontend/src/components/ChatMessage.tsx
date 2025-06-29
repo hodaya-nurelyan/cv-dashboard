@@ -56,7 +56,7 @@ export function ChatMessage({
           )}
 
           <div
-            className={`font-semibold relative  rounded-xl px-4 py-2 max-w-xs text-${directionClass}   ${type == "question"
+            className={` relative  rounded-xl px-4 py-2 max-w-xs text-${directionClass}   ${type == "question"
               ? "text-slate-900  bg-white"
               : "bg-slate-900"
               }`}
