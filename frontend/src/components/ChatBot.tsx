@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SparklesIcon, XMarkIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChatMessage } from "./ChatMessage";
+
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,9 @@ export default function ChatBot() {
   >([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
 
   const LOCAL_STORAGE_KEY = "chat-history";
 
@@ -21,6 +25,13 @@ export default function ChatBot() {
       setHistory(JSON.parse(stored));
     }
   }, []);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [history, loading]);
+
 
   // Save history to localStorage
   useEffect(() => {
@@ -36,6 +47,17 @@ export default function ChatBot() {
       setHistory([{ question: "", answer: greeting }]);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 300); // מספיק זמן אחרי האנימציה
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
 
   async function ask() {
     if (!question.trim()) return;
@@ -71,6 +93,7 @@ export default function ChatBot() {
       setError("תקלה בשליחה. נסי שוב בעוד רגע.");
     } finally {
       setLoading(false);
+      inputRef.current?.focus();
     }
   }
 
@@ -174,6 +197,7 @@ export default function ChatBot() {
                   <span className="bg-slate-900 rounded-full h-2 w-2 animate-bounce [animation-delay:.3s]"></span>
                 </div>
               )}
+              <div ref={bottomRef} />
 
               {error && (
                 <div className="text-red-500 text-sm font-medium">{error}</div>
@@ -184,13 +208,13 @@ export default function ChatBot() {
             <div className="p-4 border-t border-slate-300 ">
               <div className="flex gap-2">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder="Ask about my experience"
                   className="flex-1 bg-white text-slate-800 placeholder-slate-500 border border-slate-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
                   onKeyDown={(e) => e.key === 'Enter' && ask()}
-                  disabled={loading}
                 />
 
                 <button

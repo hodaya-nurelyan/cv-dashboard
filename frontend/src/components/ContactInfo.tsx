@@ -2,7 +2,7 @@ import { MapPin, Mail } from "lucide-react";
 
 export default function ContactInfo() {
   return (
-    <div className="space-y-6 text-white">
+    <div className="space-y-6 ">
       {/* Location */}
       <div className="flex items-start gap-4">
         <MapPin className="text-magenta-custom mt-1" />

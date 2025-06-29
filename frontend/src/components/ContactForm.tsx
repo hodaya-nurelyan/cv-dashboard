@@ -47,7 +47,7 @@ export default function ContactSection() {
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
         {/* Left Side - Contact Info */}
         <div className="space-y-6">
-          <p className="text-gray-300">
+          <p className="">
             Let’s connect! Whether it's a new idea, a job opportunity, or just a
             quick hello – I’d love to hear from you.
           </p>
