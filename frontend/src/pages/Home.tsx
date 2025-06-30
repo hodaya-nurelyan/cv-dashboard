@@ -129,7 +129,6 @@ export default function Home() {
               <SideNav />
             </div>
           </header>
-
           <main id="content" className="pt-24 lg:w-[52%] lg:py-24">
             <section
               id="about"
