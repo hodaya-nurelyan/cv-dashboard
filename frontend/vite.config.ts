@@ -15,5 +15,8 @@ export default defineConfig({
     watch: {
       usePolling: true, // חובה עבור Docker על Windows/WSL
     },
+    proxy: {
+    '/api': 'http://localhost:8000',
+    },
   },
 });

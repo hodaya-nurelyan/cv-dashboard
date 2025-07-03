@@ -5,7 +5,7 @@ import json
 import requests
 import hashlib
 from typing import List
-
+import debugpy; debugpy.breakpoint()
 router = APIRouter()
 
 # GROQ config
@@ -121,7 +121,9 @@ class ChatRequest(BaseModel):
 
 
 @router.post("/api/chat")
+
 async def chat_endpoint(req: ChatRequest):
+    # debugpy.breakpoint() 
     try:
         messages = [{"role": "system", "content": SYSTEM_MESSAGE}] + [
             {"role": m.role, "content": m.content} for m in req.messages
@@ -145,7 +147,7 @@ async def chat_endpoint(req: ChatRequest):
             "messages": messages
         }
 
-        print(payload)
+       
         response = requests.post(GROQ_API_URL, headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()

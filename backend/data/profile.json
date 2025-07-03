@@ -23,36 +23,6 @@
       "years": "2008-2011"
     }
   ],
-  "skills": [
-    {
-      "name": "React",
-      "level": 90
-    },
-    {
-      "name": "Python",
-      "level": 95
-    },
-    {
-      "name": "AWS",
-      "level": 70
-    },
-    {
-      "name": "php",
-      "level": 90
-    },
-    {
-      "name": "javascript",
-      "level": 95
-    },
-    {
-      "name": "AWS",
-      "level": 70
-    },
-    {
-      "name": "css",
-      "level": 70
-    }
-  ],
   "experience": [
     {
       "company": "Signature-IT",
