@@ -69,5 +69,5 @@ def get_profile():
 #         return {"error": str(e)}
 
 # --- צירוף הרואטרים ---
-# app.include_router(chatbot_router)
+app.include_router(chatbot_router)
 app.include_router(contact_router)

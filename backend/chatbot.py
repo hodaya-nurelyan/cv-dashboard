@@ -5,7 +5,8 @@ import json
 import requests
 import hashlib
 from typing import List
-import debugpy; debugpy.breakpoint()
+import debugpy
+debugpy.breakpoint()
 router = APIRouter()
 
 # GROQ config
@@ -121,20 +122,24 @@ class ChatRequest(BaseModel):
 
 
 @router.post("/api/chat")
-
 async def chat_endpoint(req: ChatRequest):
-    # debugpy.breakpoint() 
     try:
+        print("Incoming request:", req)
+
         messages = [{"role": "system", "content": SYSTEM_MESSAGE}] + [
             {"role": m.role, "content": m.content} for m in req.messages
         ]
+        print("Formatted messages:", messages)
 
-        # Optional: Use only last user message for caching
         last_user_message = next(
             (m.content for m in reversed(req.messages) if m.role == "user"), "")
+        print("Last user message:", last_user_message)
+
         cache_key = hash_question(last_user_message)
+        print("Cache key:", cache_key)
 
         if cache_key in CACHE:
+            print("Cache hit!")
             return {"answer": CACHE[cache_key]}
 
         headers = {
@@ -146,11 +151,13 @@ async def chat_endpoint(req: ChatRequest):
             "model": GROQ_MODEL,
             "messages": messages
         }
+        print("Sending request to GROQ API...")
 
-       
         response = requests.post(GROQ_API_URL, headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
+
+        print("GROQ response:", result)
 
         answer = result["choices"][0]["message"]["content"]
         CACHE[cache_key] = answer
@@ -158,4 +165,5 @@ async def chat_endpoint(req: ChatRequest):
         return {"answer": answer}
 
     except Exception as e:
+        print("Error occurred:", str(e))
         return {"error": str(e)}
