@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const items = [
   { href: "#about", id: "about", label: "About" },
@@ -9,7 +10,7 @@ const items = [
 
 const SideNav = () => {
   const [activeId, setActiveId] = useState("about");
-
+  const { darkMode } = useTheme();
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -47,7 +48,9 @@ const SideNav = () => {
               />
               <span
                 className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors ${activeId === item.id
-                    ? "text-slate-200"
+                    ? darkMode
+                      ? "text-slate-200"
+                      : "text-slate-900"
                     : "text-slate-500 group-hover:text-slate-200"
                   }`}
               >
@@ -55,9 +58,10 @@ const SideNav = () => {
               </span>
             </a>
           </li>
+
         ))}
       </ul>
-    </nav>
+    </nav >
   );
 };
 

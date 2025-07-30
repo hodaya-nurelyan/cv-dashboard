@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 function cleanText(text: string) {
   // מסיר את בלוק ה-JSON עם הפונקציה
@@ -14,10 +15,17 @@ export function ChatMessage({
   type: string;
   direction: "left" | "right";
 }) {
+  const { darkMode } = useTheme();
   const isHebrew = /[\u0590-\u05FF]/.test(message);
   const textDirection = direction === "right" ? "rtl" : "ltr";
   const directionClass = direction === "right" ? "right" : "left";
-  const color = type == "question" ? "white" : "slate-900";
+  const color = type == "question" ? "white" : darkMode
+    ? "slate-200"
+    : "slate-900";
+
+
+
+
 
   const triangleDirection =
     direction === "right"
@@ -58,7 +66,7 @@ export function ChatMessage({
           <div
             className={` relative  rounded-xl px-4 py-2 max-w-xs text-${directionClass}   ${type == "question"
               ? "text-slate-900  bg-white"
-              : "bg-slate-900"
+              : "bg-slate-900  text-slate-200"
               }`}
           >
             {/* חץ שמאלה (כמו bubble) */}

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Download, FileText, FileDown } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function DownloadMenu() {
   const [open, setOpen] = useState(false);
-
+  const { darkMode } = useTheme();
   const downloadCV = (format) => {
     const fileUrls = {
       pdf: "/cv/hodaya-resume.pdf",
@@ -21,7 +22,7 @@ export default function DownloadMenu() {
       {/* Toggle Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="inline-flex items-center font-medium text-base text-slate-200 hover:text-magenta-custom transition-colors"
+        className={`${darkMode ? " text-slate-200" : " text-slate-900"} inline-flex items-center font-medium text-base  hover:text-magenta-custom transition-colors`}
         title="Download My CV"
       >
         Download My CV
@@ -31,8 +32,8 @@ export default function DownloadMenu() {
       {/* Download Buttons */}
       <div
         className={`absolute top-1/2 left-full ml-3 transform -translate-y-1/2 flex  gap-2 transition-all duration-300 ${open
-            ? "opacity-100 translate-x-0"
-            : "opacity-0 -translate-x-2 pointer-events-none"
+          ? "opacity-100 translate-x-0"
+          : "opacity-0 -translate-x-2 pointer-events-none"
           }`}
       >
         <button

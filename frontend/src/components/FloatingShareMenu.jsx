@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Share2, Mail, MessageCircleMore, Link, Linkedin } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function ShareMenu() {
   const [open, setOpen] = useState(false);
-
+  const { darkMode } = useTheme();
   const shareProfile = (platform) => {
     const profileUrl = encodeURIComponent("https://askhodaya.com");
     const text = encodeURIComponent("Check out Hodaya's interactive resume!");
@@ -25,11 +26,11 @@ export default function ShareMenu() {
 
   return (
     <div
-      className="relative inline-block"    
+      className="relative inline-block"
     >
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center font-medium text-base text-slate-200 hover:text-magenta-custom transition-colors"
+        className={`${darkMode ? " text-slate-200" : " text-slate-900"} inline-flex items-center font-medium text-base  hover:text-magenta-custom transition-colors`}
         title="Share My CV"
       >
         Share My CV
@@ -38,9 +39,8 @@ export default function ShareMenu() {
 
       {/* Share Buttons - on open */}
       <div
-        className={`absolute top-1/2 left-full ml-3 transform -translate-y-1/2 flex  gap-2 transition-opacity duration-300 ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`absolute top-1/2 left-full ml-3 transform -translate-y-1/2 flex  gap-2 transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
       >
         <button
           onClick={() => shareProfile("email")}

@@ -43,7 +43,7 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="bg-[#0f172a] ">
+    <div >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
         {/* Left Side - Contact Info */}
         <div className="space-y-6">
