@@ -32,10 +32,6 @@ if os.getenv("DEBUGPY_ENABLED") == "1":
         return response
 
 
-
-
-
-
 # --- הגדרת CORS ---
 app.add_middleware(
     CORSMiddleware,
@@ -45,31 +41,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# # --- מסלול לפרופיל ---
-# @app.get("/api/profile")
-# def get_profile():
-#     # import debugpy; debugpy.breakpoint()
-#     try:
-#         with open("data/profile.json", encoding="utf-8") as f:
-#             return json.load(f)
-#     except FileNotFoundError:
-#         return {"error": "Profile not found"}
+# --- מסלול לפרופיל ---
 
 
 @app.get("/api/profile")
 def get_profile():
+    # import debugpy; debugpy.breakpoint()
     try:
-        url = os.environ.get("PROFILE_API_URL")
-        if not url:
-            return {"error": "PROFILE_API_URL is not set in .env"}
-        
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
-        
-    except Exception as e:
-        return {"error": str(e)}
+        with open("data/profile.json", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"error": "Profile not found"}
+
+
+# @app.get("/api/profile")
+# def get_profile():
+#     try:
+#         url = os.environ.get("PROFILE_API_URL")
+#         if not url:
+#             return {"error": "PROFILE_API_URL is not set in .env"}
+
+#         response = requests.get(url)
+#         response.raise_for_status()
+#         return response.json()
+
+#     except Exception as e:
+#         return {"error": str(e)}
 
 # --- צירוף הרואטרים ---
-app.include_router(chatbot_router)
+# app.include_router(chatbot_router)
 app.include_router(contact_router)
