@@ -3,7 +3,7 @@ name: Deploy to EC2 on Push
 on:
   push:
     branches:
-      - main  # שנה אם את עובדת על ענף אחר
+      - main
 
 jobs:
   deploy:
@@ -28,18 +28,42 @@ jobs:
             echo "📥 Pulling latest code from main..."
             git pull origin main
 
-            echo "🧹 Stopping and removing old containers..."
+            echo "🧹 Setting up Docker log rotation..."
+            sudo mkdir -p /etc/docker
+            cat <<JSON | sudo tee /etc/docker/daemon.json
+            {
+              "log-driver": "json-file",
+              "log-opts": {
+                "max-size": "10m",
+                "max-file": "3"
+              }
+            }
+            JSON
+            sudo systemctl restart docker
+            echo "✅ Docker log rotation configured"
+
+            echo "🧹 Cleaning up Docker before deploy..."
             docker-compose -f docker-compose.production.yml down || true
             docker rm -f cv_frontend_prod || true
             docker rm -f cv_backend_prod || true
-            docker container prune -f
+            docker system prune -af || true
+            docker volume prune -f || true
+            find /var/lib/docker/containers -name "*-json.log" -type f -exec truncate -s 0 {} \; 2>/dev/null || true
 
             echo "🔨 Building containers..."
             docker-compose -f docker-compose.production.yml build
 
-            echo "🚀 Starting up containers..."
+            echo "🚀 Starting containers..."
             docker-compose -f docker-compose.production.yml up -d
 
-            echo "🧼 Cleaning up old images..."
-            docker image prune -f
+            echo "🧼 Post-deploy cleanup of old images..."
+            docker image prune -f || true
+
+            echo "🕒 Setting up weekly cron job for Docker cleanup..."
+            # Cron job שיריץ ניקוי containers/volumes כל יום ראשון ב-03:30
+            CRON_CMD="30 3 * * 0 /usr/bin/docker system prune -af >/dev/null 2>&1; /usr/bin/docker volume prune -f >/dev/null 2>&1"
+            (crontab -l 2>/dev/null | grep -v -F "$CRON_CMD"; echo "$CRON_CMD") | crontab -
+            echo "✅ Weekly Docker cleanup cron job configured"
+
+            echo "✅ Deployment complete!"
           EOF
