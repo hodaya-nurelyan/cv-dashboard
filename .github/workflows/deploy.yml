@@ -51,7 +51,7 @@ jobs:
             find /var/lib/docker/containers -name "*-json.log" -type f -exec truncate -s 0 {} \; 2>/dev/null || true
 
             echo "🔨 Building containers..."
-            docker-compose -f docker-compose.production.yml build
+            docker-compose -f docker-compose.production.yml build --no-cache
 
             echo "🚀 Starting containers..."
             docker-compose -f docker-compose.production.yml up -d
